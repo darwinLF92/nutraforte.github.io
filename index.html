@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NUTRAFORTE</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUTRAFORTE</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>NUTRAFORTE</h1>
-        <p>Producción y distribución de productos alimenticios para ganadería</p>
-    </header>
+  <header class="encabezado">
+    <img src="logo.png" alt="Logo Nutraforte" class="logo">
+    <div class="texto-encabezado">
+      <h1>NUTRAFORTE</h1>
+      <p>Producción y distribución de productos alimenticios para ganadería</p>
+    </div>
+  </header>
 
-    <nav>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
+  <nav class="navbar">
+    <a href="#nosotros">Nosotros</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
 
-    <section id="nosotros">
-        <h2>¿Quiénes Somos?</h2>
-        <p>Somos una empresa dedicada a la nutrición animal, comprometidos con la calidad y el bienestar del sector agropecuario guatemalteco.</p>
-    </section>
+  <section id="nosotros" class="seccion">
+    <h2>¿Quiénes Somos?</h2>
+    <p>Somos una empresa guatemalteca comprometida con la nutrición animal, enfocada en brindar soluciones de alta calidad para el sector agropecuario.</p>
+    <img src="fondo_nosotros.jpg" alt="Nutrición animal" class="imagen-seccion">
+  </section>
 
-    <section id="servicios">
-        <h2>Nuestros Servicios</h2>
-        <ul>
-            <li>Producción de concentrado</li>
-            <li>Distribución a nivel nacional</li>
-            <li>Asesoría técnica para ganaderos</li>
-        </ul>
-    </section>
+  <section id="servicios" class="seccion">
+    <h2>Nuestros Servicios</h2>
+    <div class="servicios">
+      <div class="card">
+        <img src="icono_concentrado.png" alt="Concentrado">
+        <p>NUCLEO FINALIZADOR</p>
+      </div>
+      <div class="card">
+        <img src="icono_distribucion.png" alt="Distribución">
+        <p>SALES MINERALES</p>
+      </div>
+      <div class="card">
+        <img src="icono_asesoria.png" alt="Asesoría">
+        <p>ASESORIA TÉCNICA</p>
+      </div>
+    </div>
+  </section>
 
-    <section id="contacto">
-        <h2>Contáctanos</h2>
-        <p>Correo: contacto@nutraforte.com.gt</p>
-        <p>Teléfono: +502 1234 5678</p>
-    </section>
+  <section id="contacto" class="seccion">
+    <h2>Contáctanos</h2>
+    <p>📧 contacto@nutraforte.com.gt</p>
+    <p>📞 +502 7947 0708</p>
+    <p>📍 KM 163.5 Aldea El Ingeniero, Chiquimula</p>
+    <p>Complejo de Bodegas Famaconsa, Bodega No. 1</p>
+  </section>
 
-    <footer>
-        <p>&copy; 2025 NUTRAFORTE - Todos los derechos reservados</p>
-    </footer>
+  <footer>
+    <p>&copy; 2025 NUTRAFORTE - Todos los derechos reservados</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
+
+
+
+  <style>
+    @media screen and (max-width: 600px) {
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  nav.navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+  </style>
 </body>
 </html>
