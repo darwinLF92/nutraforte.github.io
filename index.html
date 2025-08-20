@@ -4,10 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NUTRAFORTE</title>
+  <script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M8L5DWDR');
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8L5DWDR"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
   <header class="encabezado">
     <div class="logo-box">
       <img src="logo.png" alt="Logo Nutraforte" class="logo">
@@ -38,13 +49,30 @@ function cargarFormulario(archivo) {
     .then(html => {
       const cont = document.getElementById('contenido');
       cont.innerHTML = html;
-      // >>> Inicializa cualquier slider que venga en el fragmento cargado
+
+      // 🔹 dispara una “vista de página” virtual para GTM/GA4
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'virtual_pageview',
+        page_path: '/' + archivo.replace('.html',''),
+        page_title: documentoTitulo(archivo) // opcional (define esta función)
+      });
+
+      // si usas el slider, reinit:
       if (window.initSliders) window.initSliders(cont);
     })
     .catch(err => console.error('Error cargando', archivo, err));
 }
-// carga inicial
-cargarFormulario('home.html');
+
+function documentoTitulo(archivo){
+  const map = {
+    'home.html': 'Inicio',
+    'quienes_somos.html': 'Nosotros',
+    'marcas.html': 'Marcas',
+    'contacto.html': 'Contacto'
+  };
+  return map[archivo] || archivo;
+}
 </script>
 
 
