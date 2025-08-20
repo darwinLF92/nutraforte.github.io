@@ -33,7 +33,7 @@
     <a href="#contacto" onclick="cargarFormulario('contacto.html')">Contacto</a>
   </nav>
 
-  <div id="contenido" style="padding: 20px;">
+  <div id="contenido">
   </div>
 
   <footer>
@@ -75,6 +75,12 @@ function documentoTitulo(archivo){
 }
 </script>
 
+<script>
+  // Apenas cargue la página, mostrar el Home
+  document.addEventListener("DOMContentLoaded", function(){
+    cargarFormulario('home.html');
+  });
+</script>
 
 <script defer>
 (function () {
@@ -182,6 +188,11 @@ function documentoTitulo(archivo){
   }
 }
 
+.encabezado { 
+  overflow: hidden;           /* recorta cualquier exceso */
+}
+
+
 /* Responsive */
 @media (max-width: 750px) {
   .logo-box {
@@ -197,6 +208,18 @@ function documentoTitulo(archivo){
   }
   .logo-box h3 {
     text-align: center;
+  }
+
+   /* Fondo rectangular a todo el ancho y alto del encabezado */
+  .logo-box::before {
+    left: 0;
+    top: 0;
+    width: 100%;              /* en vez de 550px */
+    height: 100%;             /* ocupa todo el alto del header */
+    clip-path: none;          /* sin forma diagonal */
+    border-radius: 0;         /* opcional: sin bordes redondeados */
+    filter: blur(0) brightness(0.95); /* menos blur para que no “se salga” */
+    background-color: #d7d7f0cc;     /* un poco más sólido en móvil */
   }
 }
 

@@ -17,8 +17,8 @@
         <div class="caption-main">
           <h3><i class="fa-solid fa-cow"></i> Bovino</h3>
           <div class="chips">
-            <span class="chip"><i class="fa-solid fa-droplet"></i> Leche</span>
-            <span class="chip"><i class="fa-solid fa-leaf"></i> Pastura</span>
+            <span class="chip"><i class="fa-solid fa-weight-hanging"></i> Engorde</span>
+            <span class="chip"><i class="fa-solid fa-bowl-food"></i> Balanceado</span>
           </div>
         </div>
       </figcaption>
@@ -29,10 +29,10 @@
       <img src="animals/imag2.jpg" alt="Gallinas en corral">
       <figcaption class="slide-caption">
         <div class="caption-main">
-          <h3><i class="fa-solid fa-dove"></i> Aves de corral</h3>
+        <h3><i class="fa-solid fa-cow"></i> Bovino</h3>
           <div class="chips">
-            <span class="chip"><i class="fa-solid fa-egg"></i> Ponedora</span>
-            <span class="chip"><i class="fa-solid fa-wheat-awn"></i> Grano</span>
+            <span class="chip"><i class="fa-solid fa-weight-hanging"></i> Engorde</span>
+            <span class="chip"><i class="fa-solid fa-bowl-food"></i> Balanceado</span>
           </div>
         </div>
       </figcaption>
@@ -43,7 +43,7 @@
       <img src="animals/imag3.jpg" alt="Cerdos en granja">
       <figcaption class="slide-caption">
         <div class="caption-main">
-          <h3><i class="fa-solid fa-piggy-bank"></i> Porcino</h3>
+        <h3><i class="fa-solid fa-cow"></i> Bovino</h3>
           <div class="chips">
             <span class="chip"><i class="fa-solid fa-weight-hanging"></i> Engorde</span>
             <span class="chip"><i class="fa-solid fa-bowl-food"></i> Balanceado</span>
@@ -204,8 +204,7 @@
   .slider-animals{
     width: 100%;
     margin-left: 0;
-    /* opcional: agrega un pequeño margen lateral visual */
-    padding-inline: 12px;
+    padding-inline: 0;       /* <-- antes tenías 12px */
     justify-content: center;
     align-items: center;
   }
@@ -237,6 +236,30 @@
   .slider-thumbs{ padding-inline: 12px; }
 }
 
+/* 2) Resetea el margen por defecto de <figure> */
+figure.slide{
+  margin: 0 !important;      /* evita los 40px del user agent */
+}
+
+
+/* EXTRA: muy pequeño */
+@media (max-width: 520px){
+  .slide{ max-width: 520px; }
+}
+
+/* Ya que en móvil hiciste el slide 'position: relative', céntralo sin margen extra */
+@media (max-width: 768px){
+  .slide{
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto !important;  /* centra y elimina cualquier margen lateral */
+    display: block;
+  }
+
+  /* Si quieres, deja un pequeño respiro a los thumbs, no al contenedor */
+  .slider-thumbs{ padding-inline: 12px; }
+}
 /* Respeto a usuarios con reducción de movimiento */
 @media (prefers-reduced-motion: reduce){
   .slide, .slide img, .slider-btn, .dot, .thumb{ transition:none !important; animation:none !important; }
