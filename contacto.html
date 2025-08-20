@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUTRAFORTE</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    #form-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#form-contacto label {
+  font-weight: bold;
+}
+
+#form-contacto input,
+#form-contacto textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#form-contacto button {
+  background: #180d36;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#form-contacto button:hover {
+  background: #4d0505;
+}
+
+.titulo-formulario {
+    text-align: center;
+}
+  </style>
+<body>
+
+<section id="contactar" class="seccion">
+  <h2 class="titulo-formulario">Puedes completar el siguiente formulario y uno de nuestros asesores se pondrá en contacto contigo.</h2>
+  <form id="form-contacto" action="https://formspree.io/f/xzzvlkwo" method="POST" autocomplete="off">
+  <input type="hidden" name="_subject" value="Nuevo mensaje de cliente desde Nutraforte">
+
+    <input type="text" id="nombre" name="nombre" placeholder="Nombre Completo" required>
+
+    <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
+
+    <input type="tel" id="celular" name="celular" placeholder="Numero de Teléfono" required pattern="[0-9+ ]+">
+
+    <input type="text" id="asunto" name="asunto" placeholder="Asunto" required>
+
+    <input type="email" id="correo" name="correo" placeholder="Correo electrónico">
+
+    <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describenos tu consulta" required></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+
+<section id="contacto" class="seccion">
+    <h2>Contáctanos</h2>
+    <p>📧 contacto@nutraforte.com.gt</p>
+    <p>📞 +502 7947 0708</p>
+    <p>📍 KM 163.5 Aldea El Ingeniero, Chiquimula</p>
+    <p>Complejo de Bodegas Famaconsa, Bodega No. 1</p>
+  </section>
+</body>
+</html>

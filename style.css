@@ -13,9 +13,9 @@ header {
 }
 
 nav {
-    background-color: rgb(21, 52, 109);
-    padding: 10px;
-    text-align: center;
+  background: linear-gradient(to right, rgb(21,52,109), rgb(42,82,152));
+  padding: 10px;
+  text-align: center;
 }
 
 nav a {
@@ -40,7 +40,7 @@ section {
 }
 
 footer {
-    background-color: #141524;
+      background: linear-gradient(to right, rgb(2, 24, 65), rgb(13, 25, 46));
     color: white;
     text-align: center;
     padding: 20px;
@@ -55,7 +55,7 @@ img {
 
 /* Logo principal */
 .logo {
-  width: 220px;
+  width: 350px;
   margin: 0 auto;
   display: block;
 }

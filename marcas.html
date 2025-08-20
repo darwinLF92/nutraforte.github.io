@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUTRAFORTE</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+    }
+
+    .slider-marcas {
+      width: 100%;
+      overflow: hidden;
+      background-color: white;
+      padding: 20px 0;
+    }
+
+    .slider-track {
+      display: flex;
+      width: calc(250px * 10);
+      animation: scroll 25s linear infinite;
+    }
+
+    .slider-track img {
+      width: 250px;
+      height: auto;
+      margin: 0 15px;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media screen and (max-width: 600px) {
+      .card {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .logo {
+        width: 150px;
+      }
+
+      nav.navbar {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+    
+  <section id="servicios" class="seccion">
+  <div class="slider-marcas">
+    <strong class="N-Marcas">Nuestras Marcas</strong>
+    <div class="slider-track">
+      <img src="marcas/Logo CEBA R.png" alt="Marca 1">
+      <img src="marcas/Logo Ceba XL.png" alt="Marca 2">
+      <img src="marcas/Logo Ceba190.png" alt="Marca 3">
+      <img src="marcas/Logo Ceba250.png" alt="Marca 4">
+      <img src="marcas/Logo ENERFORTE.jpg" alt="Marca 5">
+      <img src="marcas/logo GDPmas final.png" alt="Marca 1">
+      <img src="marcas/logo incrementa.png" alt="Marca 2">
+      <img src="marcas/Logotipo NUTRIMIX.jpg" alt="Marca 3">
+      <img src="marcas/Logotipo PremixForte.png" alt="Marca 4">
+      <img src="marcas/Logotipo RUMEN CARE.jpg" alt="Marca 5">
+    </div>
+  </div>
+  </section>
+
+  </body>
+</html>
