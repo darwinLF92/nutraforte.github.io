@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NUTRAFORTE</title>
+  <title>Nutraforte | Nutrición y Salud Animal en Guatemala</title>
+  <meta name="description" content="Nutraforte ofrece soluciones de nutrición y salud animal para bovinos, cerdos,engorde balanceado y más en Guatemala.">
   <script>
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -27,11 +28,12 @@
   </header>
 
   <nav class="navbar">
-    <a href="#inicio" onclick="cargarFormulario('home.html')">Inicio</a>
-    <a href="#nosotros" onclick="cargarFormulario('quienes_somos.html')">Nosotros</a>
-    <a href="#servicios" onclick="cargarFormulario('marcas.html')">Marcas</a>
-    <a href="#contacto" onclick="cargarFormulario('contacto.html')">Contacto</a>
+    <a href="home.html" class="nav-link">Inicio</a>
+    <a href="quienes_somos.html" class="nav-link">Nosotros</a>
+    <a href="marcas.html" class="nav-link">Marcas</a>
+    <a href="contacto.html" class="nav-link">Contacto</a>
   </nav>
+
 
   <div id="contenido">
   </div>
@@ -41,139 +43,310 @@
   </footer>
 
   <script src="script.js"></script>
-
 <script>
-function cargarFormulario(archivo) {
+function documentoTitulo(archivo){
+  const map = {
+    'index.html': 'Inicio',
+    'home.html': 'Inicio',
+    'quienes_somos.html': 'Nosotros',
+    'marcas.html': 'Marcas',
+    'contacto.html': 'Contacto',
+    'bovino.html': 'Bovino',
+    'engorde-balanceado.html': 'Engorde Balanceado',
+    'gallinas.html': 'Gallinas en Corral'
+  };
+  return map[archivo] || archivo.replace('.html', '');
+}
+
+function cargarFormulario(archivo, cambiarUrl = true) {
   fetch(archivo)
-    .then(res => res.text())
+    .then(res => {
+      if (!res.ok) throw new Error('No se pudo cargar ' + archivo);
+      return res.text();
+    })
     .then(html => {
       const cont = document.getElementById('contenido');
       cont.innerHTML = html;
 
-      // 🔹 dispara una “vista de página” virtual para GTM/GA4
+      document.title = documentoTitulo(archivo) + ' | NUTRAFORTE';
+
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'virtual_pageview',
         page_path: '/' + archivo.replace('.html',''),
-        page_title: documentoTitulo(archivo) // opcional (define esta función)
+        page_title: documentoTitulo(archivo)
       });
 
-      // si usas el slider, reinit:
-      if (window.initSliders) window.initSliders(cont);
+      if (cambiarUrl) {
+        history.pushState({ archivo: archivo }, '', archivo);
+      }
+
+      if (window.initSliders) {
+        window.initSliders(cont);
+      }
     })
-    .catch(err => console.error('Error cargando', archivo, err));
+    .catch(err => console.error('Error cargando:', archivo, err));
 }
 
-function documentoTitulo(archivo){
-  const map = {
-    'home.html': 'Inicio',
-    'quienes_somos.html': 'Nosotros',
-    'marcas.html': 'Marcas',
-    'contacto.html': 'Contacto'
-  };
-  return map[archivo] || archivo;
-}
-</script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.navbar a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const archivo = this.getAttribute('href');
 
-<script>
-  // Apenas cargue la página, mostrar el Home
-  document.addEventListener("DOMContentLoaded", function(){
-    cargarFormulario('home.html');
+      if (!archivo || archivo.startsWith('http') || archivo.startsWith('#')) {
+        return;
+      }
+
+      e.preventDefault();
+      cargarFormulario(archivo, true);
+    });
   });
+
+  let paginaActual = window.location.pathname.split('/').pop();
+
+  if (!paginaActual || paginaActual === 'index.html') {
+    cargarFormulario('home.html', false);
+  } else {
+    cargarFormulario(paginaActual, false);
+  }
+});
+
+window.addEventListener('popstate', function(e) {
+  const archivo = e.state?.archivo || window.location.pathname.split('/').pop() || 'home.html';
+
+  if (archivo === 'index.html') {
+    cargarFormulario('home.html', false);
+  } else {
+    cargarFormulario(archivo, false);
+  }
+});
 </script>
 
 <script defer>
 (function () {
-  function el(tag, cls){ const n = document.createElement(tag); if(cls) n.className = cls; return n; }
+  function el(tag, cls){
+    const n = document.createElement(tag);
+    if(cls) n.className = cls;
+    return n;
+  }
 
   function setupSlider(root){
     if(!root || root.dataset.initialized === 'true') return;
     root.dataset.initialized = 'true';
 
     let stage = root.querySelector('.slider-stage');
+
     if(!stage){
       stage = el('div','slider-stage');
+
       const slidesInRoot = [...root.querySelectorAll(':scope > .slide, :scope > figure.slide')];
       slidesInRoot.forEach(s => stage.appendChild(s));
+
       if(!slidesInRoot.length){
         const old = root.querySelector('.slider-slide');
-        if(old){ [...old.children].forEach(s => stage.appendChild(s)); old.remove(); }
+        if(old){
+          [...old.children].forEach(s => stage.appendChild(s));
+          old.remove();
+        }
       }
+
       root.insertBefore(stage, root.firstChild);
     }
 
     const slides = [...stage.querySelectorAll('.slide')];
     if(!slides.length) return;
-    if(!stage.querySelector('.slide.active')) slides[0].classList.add('active');
+
+    if(!stage.querySelector('.slide.active')) {
+      slides[0].classList.add('active');
+    }
 
     let prevBtn = root.querySelector('.slider-btn.prev');
     let nextBtn = root.querySelector('.slider-btn.next');
-    if(!prevBtn){ prevBtn = el('button','slider-btn prev'); prevBtn.setAttribute('aria-label','Anterior'); prevBtn.innerHTML='&#10094;'; root.appendChild(prevBtn); }
-    if(!nextBtn){ nextBtn = el('button','slider-btn next'); nextBtn.setAttribute('aria-label','Siguiente'); nextBtn.innerHTML='&#10095;'; root.appendChild(nextBtn); }
+
+    if(!prevBtn){
+      prevBtn = el('button','slider-btn prev');
+      prevBtn.setAttribute('aria-label','Anterior');
+      prevBtn.innerHTML='&#10094;';
+      root.appendChild(prevBtn);
+    }
+
+    if(!nextBtn){
+      nextBtn = el('button','slider-btn next');
+      nextBtn.setAttribute('aria-label','Siguiente');
+      nextBtn.innerHTML='&#10095;';
+      root.appendChild(nextBtn);
+    }
 
     let progWrap = root.querySelector('.slider-progress');
-    if(!progWrap){ progWrap = el('div','slider-progress'); const bar = el('span'); progWrap.appendChild(bar); root.insertBefore(progWrap, stage); }
+
+    if(!progWrap){
+      progWrap = el('div','slider-progress');
+      const bar = el('span');
+      progWrap.appendChild(bar);
+      root.insertBefore(progWrap, stage);
+    }
+
     const progressBar = progWrap.querySelector('span');
 
     let dotsWrap = root.querySelector('.slider-dots');
-    if(!dotsWrap){ dotsWrap = el('div','slider-dots'); root.appendChild(dotsWrap); }
+
+    if(!dotsWrap){
+      dotsWrap = el('div','slider-dots');
+      root.appendChild(dotsWrap);
+    }
+
     dotsWrap.innerHTML = '';
-    const dots = slides.map((_,idx)=>{ const d=el('button','dot'); d.setAttribute('role','tab'); d.setAttribute('aria-label', String(idx+1)); dotsWrap.appendChild(d); return d; });
+
+    const dots = slides.map((_,idx)=>{
+      const d = el('button','dot');
+      d.setAttribute('role','tab');
+      d.setAttribute('aria-label', String(idx+1));
+      dotsWrap.appendChild(d);
+      return d;
+    });
 
     let thumbsWrap = root.querySelector('.slider-thumbs');
-    if(!thumbsWrap){ thumbsWrap = el('div','slider-thumbs'); root.appendChild(thumbsWrap); }
-    thumbsWrap.innerHTML = '';
-    const thumbs = slides.map(sl=>{ const b=el('button','thumb'); const img=sl.querySelector('img')?.cloneNode(); if(img){ img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.loading='lazy'; } b.appendChild(img||el('div')); thumbsWrap.appendChild(b); return b; });
 
-    let i = slides.findIndex(s=>s.classList.contains('active')); if(i<0) i=0;
-    let timer=null, tick=null, autoplayMs=5000;
+    if(!thumbsWrap){
+      thumbsWrap = el('div','slider-thumbs');
+      root.appendChild(thumbsWrap);
+    }
+
+    thumbsWrap.innerHTML = '';
+
+    const thumbs = slides.map(sl=>{
+      const b = el('button','thumb');
+      const img = sl.querySelector('img')?.cloneNode();
+
+      if(img){
+        img.removeAttribute('srcset');
+        img.removeAttribute('sizes');
+        img.loading = 'lazy';
+      }
+
+      b.appendChild(img || el('div'));
+      thumbsWrap.appendChild(b);
+      return b;
+    });
+
+    let i = slides.findIndex(s => s.classList.contains('active'));
+    if(i < 0) i = 0;
+
+    let timer = null;
+    let tick = null;
+    let autoplayMs = 5000;
 
     function setActive(n){
-      slides[i].classList.remove('active'); dots[i]?.classList.remove('active'); thumbs[i]?.classList.remove('active');
+      slides[i].classList.remove('active');
+      dots[i]?.classList.remove('active');
+      thumbs[i]?.classList.remove('active');
+
       i = (n + slides.length) % slides.length;
-      slides[i].classList.add('active'); dots[i]?.classList.add('active'); thumbs[i]?.classList.add('active');
+
+      slides[i].classList.add('active');
+      dots[i]?.classList.add('active');
+      thumbs[i]?.classList.add('active');
+
       resetProgress();
     }
-    const next = ()=> setActive(i+1);
-    const prev = ()=> setActive(i-1);
 
-    function play(){ stop(); timer=setInterval(next, autoplayMs); startProgress(); }
-    function stop(){ if(timer){clearInterval(timer); timer=null;} if(tick){clearInterval(tick); tick=null;} }
-    function startProgress(){ if(!progressBar) return; let w=0; progressBar.style.width='0%'; tick=setInterval(()=>{ w+=100/(autoplayMs/100); progressBar.style.width=Math.min(w,100)+'%'; if(w>=100){ clearInterval(tick); tick=null; }},100); }
-    function resetProgress(){ if(progressBar) progressBar.style.width='0%'; if(timer) startProgress(); }
+    const next = () => setActive(i + 1);
+    const prev = () => setActive(i - 1);
+
+    function play(){
+      stop();
+      timer = setInterval(next, autoplayMs);
+      startProgress();
+    }
+
+    function stop(){
+      if(timer){
+        clearInterval(timer);
+        timer = null;
+      }
+
+      if(tick){
+        clearInterval(tick);
+        tick = null;
+      }
+    }
+
+    function startProgress(){
+      if(!progressBar) return;
+
+      let w = 0;
+      progressBar.style.width = '0%';
+
+      tick = setInterval(()=>{
+        w += 100 / (autoplayMs / 100);
+        progressBar.style.width = Math.min(w,100) + '%';
+
+        if(w >= 100){
+          clearInterval(tick);
+          tick = null;
+        }
+      }, 100);
+    }
+
+    function resetProgress(){
+      if(progressBar) progressBar.style.width = '0%';
+      if(timer) startProgress();
+    }
 
     nextBtn.addEventListener('click', next);
     prevBtn.addEventListener('click', prev);
-    dots.forEach((d,idx)=> d.addEventListener('click', ()=> setActive(idx)));
-    thumbs.forEach((t,idx)=> t.addEventListener('click', ()=> setActive(idx)));
 
-    root.addEventListener('mouseenter', ()=>root.focus({preventScroll:true}));
+    dots.forEach((d,idx) => {
+      d.addEventListener('click', () => setActive(idx));
+    });
+
+    thumbs.forEach((t,idx) => {
+      t.addEventListener('click', () => setActive(idx));
+    });
+
     root.setAttribute('tabindex','0');
-    root.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
+
+    root.addEventListener('keydown', e => {
+      if(e.key === 'ArrowRight') next();
+      if(e.key === 'ArrowLeft') prev();
+    });
 
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', play);
     root.addEventListener('focusin', stop);
     root.addEventListener('focusout', play);
 
-    let sx=0, dx=0;
-    stage.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; dx=0; }, {passive:true});
-    stage.addEventListener('touchmove',  e=>{ dx=e.touches[0].clientX - sx; }, {passive:true});
-    stage.addEventListener('touchend',  ()=>{ if(Math.abs(dx)>40) (dx<0?next():prev()); });
+    let sx = 0;
+    let dx = 0;
 
-    dots[i]?.classList.add('active'); thumbs[i]?.classList.add('active'); play();
+    stage.addEventListener('touchstart', e => {
+      sx = e.touches[0].clientX;
+      dx = 0;
+    }, {passive:true});
+
+    stage.addEventListener('touchmove', e => {
+      dx = e.touches[0].clientX - sx;
+    }, {passive:true});
+
+    stage.addEventListener('touchend', () => {
+      if(Math.abs(dx) > 40) {
+        dx < 0 ? next() : prev();
+      }
+    });
+
+    dots[i]?.classList.add('active');
+    thumbs[i]?.classList.add('active');
+
+    play();
   }
 
-  // HAZLA GLOBAL para poder llamarla después de inyectar HTML
-  window.initSliders = function(scope=document){
+  window.initSliders = function(scope = document){
     scope.querySelectorAll('.slider-animals:not([data-initialized])').forEach(setupSlider);
   };
 
-  // Si había sliders ya en el DOM inicial
-  document.addEventListener('DOMContentLoaded', ()=> window.initSliders());
+  document.addEventListener('DOMContentLoaded', () => window.initSliders());
 })();
 </script>
-
 
   <style>
     @media screen and (max-width: 600px) {
